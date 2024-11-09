@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
+import os
+import sys
+
+
+def usage(bin_name):
+    print("Usage: " + bin_name + " [--rw] <filename.ISO.C> <mount_point>")
+    print("\t--rw:\tcommit writes to ISO.C file, otherwise discarded on unmount.")
+    print("\t\tIf the ISO.C file does not exist, a new one will be created.")
+    sys.exit(0)
+
+
+def main():
+    bin_name = sys.argv[0][sys.argv[0].rfind("/") + 1 :]
+    isoc_py3_path = sys.argv[0][: sys.argv[0].rfind("/") + 1] + "isoc-py3.py"
+    if len(sys.argv) < 3:
+        usage(bin_name)
+    i = 0
+    rw = ""
+    while i < len(sys.argv):
+        if sys.argv[i].lower() == "--rw":
+            rw = "rw"
+            del sys.argv[i]
+        i += 1
+    isoc_py3_cmd = (
+        isoc_py3_path + ' "' + sys.argv[1] + '" "' + sys.argv[2] + '" "' + rw + '" &'
+    )
+    os.system(isoc_py3_cmd)
+    sys.exit(0)
+
+
+main()
