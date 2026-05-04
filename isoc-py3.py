@@ -190,7 +190,7 @@ def write_iso_c(self, iso_c_file):
                 # File
                 file.write(b"\x20")
             if f["filename"][-2:] == ".Z":
-                file.write(b"\x0c")
+                file.write(b"\x04")
             else:
                 file.write(b"\x08")
             file.write(f["filename"].ljust(CDIR_FILENAME_LEN, "\0").encode("utf-8"))
